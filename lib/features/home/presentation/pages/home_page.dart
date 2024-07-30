@@ -36,7 +36,7 @@ class HomePage extends StatelessWidget {
         child: AppBar(
           flexibleSpace: const Padding(
             padding: EdgeInsets.symmetric(vertical: 40),
-            child: CustomAppBar(text: "Advanced Exchange"),
+            child: CustomAppBar(text: "Advanced Exchanger"),
           ),
           backgroundColor: AppColors.dark,
         ),
@@ -46,15 +46,15 @@ class HomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const TitleWidget(title: 'Insert amount:'),
+            const TitleWidget(title: 'Insert amount :'),
             const SizedBox(height: 10),
             CurrencyTile(
-              amountWidget: CustomInput(
+              amountWidget: const CustomInput(
                 title: "Enter the amount",
               ),
             ),
             const SizedBox(height: 30),
-            const TitleWidget(title: 'Convert to:'),
+            const TitleWidget(title: 'Convert to :'),
             const SizedBox(height: 10),
             Expanded(
               child: ListView(
@@ -62,11 +62,11 @@ class HomePage extends StatelessWidget {
                 physics: AppTheme.scrollPhysics,
                 children: [
                   CurrencyTile(
-                    amountWidget: Padding(
+                    amountWidget: const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       child: Text(
                         "1250",
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: AppColors.light,
                           fontWeight: FontWeight.w500,
                           fontSize: 22,
@@ -76,11 +76,11 @@ class HomePage extends StatelessWidget {
                   ),
                   const SizedBox(height: 15),
                   CurrencyTile(
-                    amountWidget: Padding(
+                    amountWidget: const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       child: Text(
                         "1250",
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: AppColors.light,
                           fontWeight: FontWeight.w500,
                           fontSize: 22,

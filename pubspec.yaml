@@ -21,6 +21,7 @@ dependencies:
   json_annotation: ^4.9.0
   freezed: ^2.5.2
   json_serializable: ^6.8.0
+  fpdart: ^1.1.0
 
 
 dev_dependencies:
