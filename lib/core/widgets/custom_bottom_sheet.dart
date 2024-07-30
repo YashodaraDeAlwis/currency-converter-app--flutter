@@ -40,7 +40,7 @@ class _CountryPickerBottomSheetState extends State<CountryPickerBottomSheet> {
                 hintText: 'Search countries',
                 hintStyle: const TextStyle(
                   color: AppColors.light,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w400,
                   fontSize: 16,
                 ),
                 border: OutlineInputBorder(
