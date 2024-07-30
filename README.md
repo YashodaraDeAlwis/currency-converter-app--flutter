@@ -14,13 +14,21 @@ Isolation: Prevents conflicts between Flutter versions used in different project
 Getting Started
 To set up and run the project, follow these steps:
 fvm releases //check the stable flutetr version
+
 fvm install {stable version}
+
 fvm global // set that version globally 
+
 fvm flutter --version  //check and veryfy the version
+
 fvm flutter create {project name} //project will create
+
 cd project name
+
 fvm flutter --version //checl ther version
+
 fvm use {version} //this will create .fvmrc file 
+
 //(check for .getignore for .fvm)
 
 Architecture
