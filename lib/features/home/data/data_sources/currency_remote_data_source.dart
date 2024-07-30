@@ -29,32 +29,6 @@ class CurrencyRemoteDataSource extends ICurrencyRemoteDataSource {
   }
 
   @override
-  Future<void> deleteCurrency(double currencyId) async {
-    final response = await http.delete(Uri.parse('$deleteCartUrl/$currencyId'));
-
-    if (response.statusCode != 200) {
-      throw Exception('Failed to delete currency');
-    }
-  }
-
-  @override
-  Future<List<CurrencyDTO>> editCurrency() async {
-    // Assuming the endpoint for editing currency requires a POST request
-    final response = await http.post(
-      Uri.parse(editCurrencyUrl),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({'some': 'data'}), // Replace with actual data
-    );
-
-    if (response.statusCode == 200) {
-      List<dynamic> data = json.decode(response.body);
-      return data.map((json) => CurrencyDTO.fromJson(json)).toList();
-    } else {
-      throw Exception('Failed to edit currency');
-    }
-  }
-
-  @override
   Future<List<CurrencyDTO>> getExchangeAmount() async {
     final response = await http.get(Uri.parse(exchangeAmountUrl));
 
@@ -63,35 +37,6 @@ class CurrencyRemoteDataSource extends ICurrencyRemoteDataSource {
       return data.map((json) => CurrencyDTO.fromJson(json)).toList();
     } else {
       throw Exception('Failed to get exchange amounts');
-    }
-  }
-
-  @override
-  Future<List<CurrencyDTO>> getSavedCurrencies() async {
-    final response = await http.get(Uri.parse(savedCurrenciesUrl));
-
-    if (response.statusCode == 200) {
-      List<dynamic> data = json.decode(response.body);
-      return data.map((json) => CurrencyDTO.fromJson(json)).toList();
-    } else {
-      throw Exception('Failed to get saved currencies');
-    }
-  }
-
-  @override
-  Future<List<CurrencyDTO>> saveCurrency() async {
-    // Assuming the endpoint for saving currency requires a POST request
-    final response = await http.post(
-      Uri.parse(saveCurrencyUrl),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({'some': 'data'}), // Replace with actual data
-    );
-
-    if (response.statusCode == 200) {
-      List<dynamic> data = json.decode(response.body);
-      return data.map((json) => CurrencyDTO.fromJson(json)).toList();
-    } else {
-      throw Exception('Failed to save currency');
     }
   }
 }
