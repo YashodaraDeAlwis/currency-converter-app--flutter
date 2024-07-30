@@ -13,7 +13,8 @@ Isolation: Prevents conflicts between Flutter versions used in different project
 
 Getting Started
 To set up and run the project, follow these steps:
-fvm releases //check the stable flutetr version
+
+fvm releases //check the stable flutter version
 
 fvm install {stable version}
 
