@@ -8,7 +8,6 @@ import 'package:currecny_converter_app/features/home/domain/use_cases/save_curre
 import 'package:currecny_converter_app/features/home/domain/use_cases/get_exchange_amount.dart';
 import 'package:currecny_converter_app/features/home/domain/use_cases/get_saved_currencies.dart';
 import 'package:get/get.dart';
-import 'package:fpdart/fpdart.dart'; // Import for Either type
 
 class HomeController extends GetxController {
   final GetCurrencies getCurrenciesUseCase;

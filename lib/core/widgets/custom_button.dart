@@ -12,14 +12,14 @@ class CustomButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-            color: AppColors.button.withOpacity(0.5),
+            color: AppColors.button.withOpacity(0.2),
             borderRadius: BorderRadius.circular(30)),
         child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             child: Text(
               title.toUpperCase(),
-              style: const TextStyle(
-                color: AppColors.button,
+              style: TextStyle(
+                color: AppColors.button.withOpacity(0.5),
                 fontWeight: FontWeight.w500,
                 fontSize: 14,
               ),

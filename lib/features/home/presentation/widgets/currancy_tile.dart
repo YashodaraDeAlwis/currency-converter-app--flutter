@@ -41,7 +41,7 @@ class _CurrencyTileState extends State<CurrencyTile> {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.secondary,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(18),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),

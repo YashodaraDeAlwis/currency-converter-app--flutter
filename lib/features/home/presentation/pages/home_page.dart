@@ -56,7 +56,7 @@ class HomePage extends StatelessWidget {
                 title: "Enter the amount",
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 35),
             const TitleWidget(title: 'Convert to :'),
             const SizedBox(height: 10),
             Expanded(
@@ -115,11 +115,7 @@ class HomePage extends StatelessWidget {
                           context,
                           countryCodes,
                           (selectedCurrency) {
-                            // Handle the selected currency
-                            // This callback will be triggered with the selected currency code
-                            // You can update your controller or state here
                             print("Selected Currency: $selectedCurrency");
-                            // For example, you might update the state of your CurrencyTile
                           },
                         );
                       },
