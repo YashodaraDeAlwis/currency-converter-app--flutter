@@ -59,7 +59,7 @@ class SplashPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(6),
                     minHeight: 2,
                     backgroundColor: AppColors.light,
-                    color: AppColors.dark50,
+                    color: Colors.black,
                     value: controller.progress,
                   ),
                 ),

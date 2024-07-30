@@ -3,7 +3,12 @@ import 'package:currecny_converter_app/features/home/data/data_sources/currency_
 import 'package:currecny_converter_app/features/home/data/data_sources/currency_remote_data_source.dart';
 import 'package:currecny_converter_app/features/home/data/repositories/currency_repository.dart';
 import 'package:currecny_converter_app/features/home/domain/use_cases/delete_currency.dart';
+import 'package:currecny_converter_app/features/home/domain/use_cases/get_currencies.dart';
+import 'package:currecny_converter_app/features/home/domain/use_cases/save_currency.dart';
+import 'package:currecny_converter_app/features/home/domain/use_cases/get_exchange_amount.dart';
+import 'package:currecny_converter_app/features/home/domain/use_cases/get_saved_currencies.dart';
 import 'package:get/get.dart';
+import 'package:fpdart/fpdart.dart'; // Import for Either type
 
 class HomeController extends GetxController {
 /* --------------------------------- private -------------------------------- */
@@ -64,33 +69,132 @@ class HomeController extends GetxController {
       ),
     ],
   );
+
 /* --------------------------------- public --------------------------------- */
-  /// data loading status
+  /// Data loading status
   bool get isLoading => _isLoading.value;
 
   List<String> get recentChatTitles => _recentChatTitles;
 
   List<CurrencyDTO> get currencies => _currencies;
+
 /* -------------------------------- overrides ------------------------------- */
   @override
   void onReady() {
-    ();
     super.onReady();
+    fetchCurrencies(); // Fetch currencies when the controller is ready
   }
 
-  void main() async {
+/* --------------------------------- methods -------------------------------- */
+
+  Future<void> fetchCurrencies() async {
+    _isLoading.value = true; // Show loading indicator
+    final repository = CurrencyRepository(
+        remoteDataSource: CurrencyRemoteDataSource(),
+        localDataSource: CurrencyLocalDataSource());
+    final getCurrenciesUseCase = GetCurrencies(repository);
+
+    final result = await getCurrenciesUseCase.call();
+
+    result.fold((failure) {
+      // Handle failure
+      print("Error: $failure");
+      // Optionally, show error to the user
+    }, (currencies) {
+      // Handle success
+      _currencies.value = currencies;
+      print("Currencies fetched successfully");
+    });
+
+    _isLoading.value = false; // Hide loading indicator
+  }
+
+  Future<void> saveCurrency(CurrencyDTO currency) async {
+    _isLoading.value = true; // Show loading indicator
+    final repository = CurrencyRepository(
+        remoteDataSource: CurrencyRemoteDataSource(),
+        localDataSource: CurrencyLocalDataSource());
+    final saveCurrencyUseCase = SaveCurrency(repository);
+
+    final result = await saveCurrencyUseCase.call();
+
+    result.fold((failure) {
+      // Handle failure
+      print("Error: $failure");
+      // Optionally, show error to the user
+    }, (currencies) {
+      // Handle success
+      _currencies.value = currencies;
+      print("Currency saved successfully");
+    });
+
+    _isLoading.value = false; // Hide loading indicator
+  }
+
+  Future<void> deleteCurrency(double currencyId) async {
+    _isLoading.value = true; // Show loading indicator
     final repository = CurrencyRepository(
         remoteDataSource: CurrencyRemoteDataSource(),
         localDataSource: CurrencyLocalDataSource());
     final deleteCurrencyUseCase = DeleteCurrency(repository);
 
-    final result = await deleteCurrencyUseCase.call(1.0); // Example currencyId
+    final result = await deleteCurrencyUseCase.call(currencyId);
 
-    result.fold(
-        (failure) => print("Error: ${failure}"), // Handle failure
-        (success) => print("Currency deleted successfully") // Handle success
-        );
+    result.fold((failure) {
+      // Handle failure
+      print("Error: $failure");
+      // Optionally, show error to the user
+    }, (success) {
+      // Handle success
+      print("Currency deleted successfully");
+      // Optionally, update the local state or UI
+      fetchCurrencies(); // Refresh the list of currencies
+    });
+
+    _isLoading.value = false; // Hide loading indicator
   }
 
-/* --------------------------------- methods -------------------------------- */
+  Future<void> getSavedCurrencies() async {
+    _isLoading.value = true; // Show loading indicator
+    final repository = CurrencyRepository(
+        remoteDataSource: CurrencyRemoteDataSource(),
+        localDataSource: CurrencyLocalDataSource());
+    final getSavedCurrenciesUseCase = GetSavedCurrencies(repository);
+
+    final result = await getSavedCurrenciesUseCase.call();
+
+    result.fold((failure) {
+      // Handle failure
+      print("Error: $failure");
+      // Optionally, show error to the user
+    }, (currencies) {
+      // Handle success
+      _currencies.value = currencies;
+      print("Saved currencies fetched successfully");
+    });
+
+    _isLoading.value = false; // Hide loading indicator
+  }
+
+  Future<void> getExchangeAmount() async {
+    _isLoading.value = true; // Show loading indicator
+    final repository = CurrencyRepository(
+        remoteDataSource: CurrencyRemoteDataSource(),
+        localDataSource: CurrencyLocalDataSource());
+    final getExchangeAmountUseCase = GetExchangeAmount(repository);
+
+    final result = await getExchangeAmountUseCase.call();
+
+    result.fold((failure) {
+      // Handle failure
+      print("Error: $failure");
+      // Optionally, show error to the user
+    }, (currencies) {
+      // Handle success
+      _currencies.value = currencies;
+      print("Exchange amounts fetched successfully");
+    });
+
+    _isLoading.value = false; // Hide loading indicator
+  }
 }
