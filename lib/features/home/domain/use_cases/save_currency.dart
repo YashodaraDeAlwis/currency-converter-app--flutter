@@ -4,11 +4,11 @@ import 'package:currecny_converter_app/core/errors/failure.dart';
 import 'package:currecny_converter_app/features/home/domain/repositories/i_currency_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
-class GetCurrencies extends UseCaseN<List<CurrencyDTO>> {
+class SaveCurrency extends UseCaseN<List<CurrencyDTO>> {
   final ICurrencyRepository repository;
-  GetCurrencies(this.repository);
+  SaveCurrency(this.repository);
   @override
   Future<Either<Failure, List<CurrencyDTO>>> call() async {
-    return repository.getCurrencies();
+    return repository.saveCurrency();
   }
 }

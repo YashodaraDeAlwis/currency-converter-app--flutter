@@ -5,5 +5,9 @@ import 'package:fpdart/fpdart.dart';
 
 abstract class ICurrencyRepository {
   Future<Either<Failure, List<CurrencyDTO>>> getCurrencies();
-  Future<Either<Failure, Option<void>>> deleteCart(String cartId);
+  Future<Either<Failure, Option<void>>> deleteCurrency(double currencyId);
+  Future<Either<Failure, List<CurrencyDTO>>> editCurrency();
+  Future<Either<Failure, List<CurrencyDTO>>> getExchangeAmount();
+  Future<Either<Failure, List<CurrencyDTO>>> getSavedCurrencies();
+  Future<Either<Failure, List<CurrencyDTO>>> saveCurrency();
 }

@@ -12,8 +12,8 @@ class CurrencyRepository extends ICurrencyRepository {
   @override
   Future<Either<Failure, List<CurrencyDTO>>> getCurrencies() async {
     try {
-      final response = await remoteDataSource.getCurrencies();
-      return right(response);
+      final currencies = await remoteDataSource.getCurrencies();
+      return right(currencies);
     } catch (e) {
       print(e);
       return left(ServerFailure());
@@ -21,10 +21,55 @@ class CurrencyRepository extends ICurrencyRepository {
   }
 
   @override
-  Future<Either<Failure, Option<void>>> deleteCart(String cartId) async {
+  Future<Either<Failure, Option<void>>> deleteCurrency(
+      double currencyId) async {
     try {
-      await remoteDataSource.deleteCart(cartId);
+      await remoteDataSource.deleteCurrency(currencyId);
       return right(none());
+    } catch (e) {
+      print(e);
+      return left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<CurrencyDTO>>> editCurrency() async {
+    try {
+      final updatedCurrencies = await remoteDataSource.editCurrency();
+      return right(updatedCurrencies);
+    } catch (e) {
+      print(e);
+      return left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<CurrencyDTO>>> getExchangeAmount() async {
+    try {
+      final exchangeAmounts = await remoteDataSource.getExchangeAmount();
+      return right(exchangeAmounts);
+    } catch (e) {
+      print(e);
+      return left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<CurrencyDTO>>> getSavedCurrencies() async {
+    try {
+      final savedCurrencies = await remoteDataSource.getSavedCurrencies();
+      return right(savedCurrencies);
+    } catch (e) {
+      print(e);
+      return left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<CurrencyDTO>>> saveCurrency() async {
+    try {
+      final savedCurrencies = await remoteDataSource.saveCurrency();
+      return right(savedCurrencies);
     } catch (e) {
       print(e);
       return left(ServerFailure());

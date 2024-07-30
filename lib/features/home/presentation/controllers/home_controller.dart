@@ -1,4 +1,7 @@
 import 'package:currecny_converter_app/core/entities/currency_dto.dart';
+import 'package:currecny_converter_app/features/home/data/data_sources/currency_remote_data_source.dart';
+import 'package:currecny_converter_app/features/home/data/repositories/currency_repository.dart';
+import 'package:currecny_converter_app/features/home/domain/use_cases/delete_currency.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
@@ -72,6 +75,19 @@ class HomeController extends GetxController {
   void onReady() {
     ();
     super.onReady();
+  }
+
+  void main() async {
+    final repository =
+        CurrencyRepository(remoteDataSource: CurrencyRemoteDataSource());
+    final deleteCurrencyUseCase = DeleteCurrency(repository);
+
+    final result = await deleteCurrencyUseCase.call(1.0); // Example currencyId
+
+    result.fold(
+        (failure) => print("Error: ${failure}"), // Handle failure
+        (success) => print("Currency deleted successfully") // Handle success
+        );
   }
 
 /* --------------------------------- methods -------------------------------- */
