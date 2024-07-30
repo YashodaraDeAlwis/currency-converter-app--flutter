@@ -2,28 +2,21 @@ import 'package:currecny_converter_app/config/colors.dart';
 import 'package:flutter/material.dart';
 
 class CountryPickerBottomSheet extends StatefulWidget {
+  final List<String> countries;
+
+  CountryPickerBottomSheet({required this.countries});
+
   @override
   _CountryPickerBottomSheetState createState() =>
       _CountryPickerBottomSheetState();
 }
 
 class _CountryPickerBottomSheetState extends State<CountryPickerBottomSheet> {
-  final List<String> countries = [
-    'United States',
-    'Canada',
-    'United Kingdom',
-    'Germany',
-    'France',
-    'Japan',
-    'Australia',
-    'India',
-  ];
-
   String searchTerm = '';
 
   @override
   Widget build(BuildContext context) {
-    List<String> filteredCountries = countries
+    List<String> filteredCountries = widget.countries
         .where((country) =>
             country.toLowerCase().contains(searchTerm.toLowerCase()))
         .toList();

@@ -30,57 +30,6 @@ class AppTheme {
           backgroundColor: AppColors.light,
           foregroundColor: AppColors.dark,
         ),
-        textTheme: const TextTheme(
-          headlineLarge: TextStyle(
-            color: AppColors.dark,
-            fontWeight: FontWeight.w600,
-            fontSize: 24,
-          ),
-          headlineMedium: TextStyle(
-            color: AppColors.dark,
-            fontWeight: FontWeight.w600,
-            fontSize: 20,
-          ),
-          headlineSmall: TextStyle(
-            color: AppColors.dark,
-            fontWeight: FontWeight.w600,
-            fontSize: 16,
-          ),
-          bodyLarge: TextStyle(
-            color: AppColors.dark,
-            fontWeight: FontWeight.w600,
-            fontSize: 14,
-          ),
-          bodyMedium: TextStyle(
-            color: AppColors.dark,
-            fontSize: 12,
-          ),
-          bodySmall: TextStyle(
-            color: AppColors.dark,
-            fontSize: 10,
-          ),
-          labelSmall: TextStyle(
-            color: AppColors.dark,
-            fontWeight: FontWeight.w600,
-            fontSize: 8,
-          ),
-        ),
-        navigationBarTheme: NavigationBarThemeData(
-          labelTextStyle: MaterialStateProperty.resolveWith((states) {
-            if (states.contains(MaterialState.selected)) {
-              return const TextStyle(
-                fontSize: 11,
-                fontWeight: FontWeight.w500,
-                color: AppColors.light,
-              );
-            }
-            return const TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w500,
-              color: Colors.grey,
-            );
-          }),
-        ),
       );
 
   static get scrollPhysics =>

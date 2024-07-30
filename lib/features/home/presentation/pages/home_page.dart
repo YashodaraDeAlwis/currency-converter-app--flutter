@@ -5,23 +5,31 @@ import 'package:currecny_converter_app/core/widgets/custom_bottom_sheet.dart';
 import 'package:currecny_converter_app/core/widgets/custom_button.dart';
 import 'package:currecny_converter_app/core/widgets/custom_input.dart';
 import 'package:currecny_converter_app/core/widgets/title_widget.dart';
+import 'package:currecny_converter_app/features/home/presentation/controllers/home_controller.dart';
 import 'package:currecny_converter_app/features/home/presentation/widgets/currancy_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  final HomeController controller = Get.find();
+  HomePage({super.key});
 
-  void _showCountryPickerBottomSheet(BuildContext context) {
+  void _showCountryPickerBottomSheet(
+      BuildContext context, List<String> countries) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return CountryPickerBottomSheet();
+        return CountryPickerBottomSheet(countries: countries);
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    // Extract country codes from the CurrencyDTO list
+    final List<String> countryCodes =
+        controller.currencies.map((currency) => currency.code).toList();
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(80.0),
@@ -40,7 +48,7 @@ class HomePage extends StatelessWidget {
           children: [
             const TitleWidget(title: 'Insert amount:'),
             const SizedBox(height: 10),
-            const CurrencyTile(
+            CurrencyTile(
               amountWidget: CustomInput(
                 title: "Enter the amount",
               ),
@@ -99,7 +107,8 @@ class HomePage extends StatelessWidget {
                     alignment: Alignment.center,
                     child: CustomButton(
                       title: '+ add converter',
-                      onTap: () => _showCountryPickerBottomSheet(context),
+                      onTap: () =>
+                          _showCountryPickerBottomSheet(context, countryCodes),
                     ),
                   ),
                 ],

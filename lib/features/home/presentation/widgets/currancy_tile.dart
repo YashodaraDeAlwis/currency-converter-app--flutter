@@ -1,23 +1,30 @@
 import 'package:currecny_converter_app/config/colors.dart';
 import 'package:currecny_converter_app/core/widgets/custom_bottom_sheet.dart';
 import 'package:currecny_converter_app/core/widgets/custom_input.dart';
+import 'package:currecny_converter_app/features/home/presentation/controllers/home_controller.dart';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class CurrencyTile extends StatelessWidget {
+  final HomeController controller = Get.find();
   final Widget amountWidget;
-  const CurrencyTile({super.key, required this.amountWidget});
-  void _showCountryPickerBottomSheet(BuildContext context) {
+  CurrencyTile({super.key, required this.amountWidget});
+  void _showCountryPickerBottomSheet(
+      BuildContext context, List<String> countries) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return CountryPickerBottomSheet();
+        return CountryPickerBottomSheet(countries: countries);
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final List<String> countryCodes =
+        controller.currencies.map((currency) => currency.code).toList();
     return Container(
       decoration: BoxDecoration(
         color: AppColors.secondary,
@@ -30,7 +37,7 @@ class CurrencyTile extends StatelessWidget {
           children: [
             amountWidget,
             GestureDetector(
-              onTap: () => _showCountryPickerBottomSheet(context),
+              onTap: () => _showCountryPickerBottomSheet(context, countryCodes),
               child: Row(
                 children: [
                   Text(
