@@ -15,11 +15,14 @@ class HomePage extends StatelessWidget {
   HomePage({super.key});
 
   void _showCountryPickerBottomSheet(
-      BuildContext context, List<String> countries) {
+      BuildContext context, List<String> countries, Function(String) onSelect) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return CountryPickerBottomSheet(countries: countries);
+        return CountryPickerBottomSheet(
+          countries: countries,
+          onSelect: onSelect,
+        );
       },
     );
   }
@@ -65,7 +68,7 @@ class HomePage extends StatelessWidget {
                     amountWidget: const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       child: Text(
-                        "1250",
+                        "1250", // This can be replaced with dynamic amount if needed
                         style: TextStyle(
                           color: AppColors.light,
                           fontWeight: FontWeight.w500,
@@ -79,7 +82,7 @@ class HomePage extends StatelessWidget {
                     amountWidget: const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       child: Text(
-                        "1250",
+                        "1250", // This can be replaced with dynamic amount if needed
                         style: TextStyle(
                           color: AppColors.light,
                           fontWeight: FontWeight.w500,
@@ -90,11 +93,11 @@ class HomePage extends StatelessWidget {
                   ),
                   const SizedBox(height: 15),
                   CurrencyTile(
-                    amountWidget: Padding(
+                    amountWidget: const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       child: Text(
-                        "5500",
-                        style: const TextStyle(
+                        "5500", // This can be replaced with dynamic amount if needed
+                        style: TextStyle(
                           color: AppColors.light,
                           fontWeight: FontWeight.w500,
                           fontSize: 22,
@@ -107,8 +110,19 @@ class HomePage extends StatelessWidget {
                     alignment: Alignment.center,
                     child: CustomButton(
                       title: '+ add converter',
-                      onTap: () =>
-                          _showCountryPickerBottomSheet(context, countryCodes),
+                      onTap: () {
+                        _showCountryPickerBottomSheet(
+                          context,
+                          countryCodes,
+                          (selectedCurrency) {
+                            // Handle the selected currency
+                            // This callback will be triggered with the selected currency code
+                            // You can update your controller or state here
+                            print("Selected Currency: $selectedCurrency");
+                            // For example, you might update the state of your CurrencyTile
+                          },
+                        );
+                      },
                     ),
                   ),
                 ],

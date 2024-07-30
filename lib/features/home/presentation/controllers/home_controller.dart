@@ -11,6 +11,8 @@ import 'package:get/get.dart';
 import 'package:fpdart/fpdart.dart'; // Import for Either type
 
 class HomeController extends GetxController {
+  final GetCurrencies getCurrenciesUseCase;
+  HomeController(this.getCurrenciesUseCase);
 /* --------------------------------- private -------------------------------- */
 
 /* ------------------------------- rx private ------------------------------- */
@@ -23,52 +25,53 @@ class HomeController extends GetxController {
     "Purchased software license from SoftTech Solutions for project management.Total Amount: Rs.600",
   ]);
 
-  final RxList<CurrencyDTO> _currencies = RxList(
-    [
-      CurrencyDTO(
-        id: 1,
-        img: 'assets/usa.png',
-        code: 'USA',
-        value: 305.2,
-      ),
-      CurrencyDTO(
-        id: 1,
-        img: 'assets/usa.png',
-        code: 'SRI',
-        value: 305.2,
-      ),
-      CurrencyDTO(
-        id: 1,
-        img: 'assets/usa.png',
-        code: 'EUR',
-        value: 305.2,
-      ),
-      CurrencyDTO(
-        id: 1,
-        img: 'assets/usa.png',
-        code: 'JAP',
-        value: 305.2,
-      ),
-      CurrencyDTO(
-        id: 1,
-        img: 'assets/usa.png',
-        code: 'IND',
-        value: 305.2,
-      ),
-      CurrencyDTO(
-        id: 1,
-        img: 'assets/usa.png',
-        code: 'AUS',
-        value: 305.2,
-      ),
-      CurrencyDTO(
-        id: 1,
-        img: 'assets/usa.png',
-        code: 'SIG',
-        value: 305.2,
-      ),
-    ],
-  );
+  // final RxList<CurrencyDTO> _currencies = RxList(
+  //   [
+  //     CurrencyDTO(
+  //       id: 1,
+  //       img: 'assets/usa.png',
+  //       code: 'USA',
+  //       value: 305.2,
+  //     ),
+  //     CurrencyDTO(
+  //       id: 1,
+  //       img: 'assets/usa.png',
+  //       code: 'SRI',
+  //       value: 305.2,
+  //     ),
+  //     CurrencyDTO(
+  //       id: 1,
+  //       img: 'assets/usa.png',
+  //       code: 'EUR',
+  //       value: 305.2,
+  //     ),
+  //     CurrencyDTO(
+  //       id: 1,
+  //       img: 'assets/usa.png',
+  //       code: 'JAP',
+  //       value: 305.2,
+  //     ),
+  //     CurrencyDTO(
+  //       id: 1,
+  //       img: 'assets/usa.png',
+  //       code: 'IND',
+  //       value: 305.2,
+  //     ),
+  //     CurrencyDTO(
+  //       id: 1,
+  //       img: 'assets/usa.png',
+  //       code: 'AUS',
+  //       value: 305.2,
+  //     ),
+  //     CurrencyDTO(
+  //       id: 1,
+  //       img: 'assets/usa.png',
+  //       code: 'SIG',
+  //       value: 305.2,
+  //     ),
+  //   ],
+  // );
+  final RxList<CurrencyDTO> currencies = <CurrencyDTO>[].obs;
 
 /* --------------------------------- public --------------------------------- */
   /// Data loading status
@@ -76,7 +79,7 @@ class HomeController extends GetxController {
 
   List<String> get recentChatTitles => _recentChatTitles;
 
-  List<CurrencyDTO> get currencies => _currencies;
+  // List<CurrencyDTO> get currencies => _currencies;
 
 /* -------------------------------- overrides ------------------------------- */
   @override
@@ -87,26 +90,18 @@ class HomeController extends GetxController {
 
 /* --------------------------------- methods -------------------------------- */
 
-  Future<void> fetchCurrencies() async {
-    _isLoading.value = true; // Show loading indicator
-    final repository = CurrencyRepository(
-        remoteDataSource: CurrencyRemoteDataSource(),
-        localDataSource: CurrencyLocalDataSource());
-    final getCurrenciesUseCase = GetCurrencies(repository);
-
+  void fetchCurrencies() async {
     final result = await getCurrenciesUseCase.call();
-
-    result.fold((failure) {
-      // Handle failure
-      print("Error: $failure");
-      // Optionally, show error to the user
-    }, (currencies) {
-      // Handle success
-      _currencies.value = currencies;
-      print("Currencies fetched successfully");
-    });
-
-    _isLoading.value = false; // Hide loading indicator
+    result.fold(
+      (failure) {
+        // Handle failure (e.g., show an error message)
+        print('Error: $failure');
+      },
+      (currencies) {
+        // Update the state with the retrieved currencies
+        this.currencies.value = currencies;
+      },
+    );
   }
 
   Future<void> saveCurrency(CurrencyDTO currency) async {
@@ -124,7 +119,7 @@ class HomeController extends GetxController {
       // Optionally, show error to the user
     }, (currencies) {
       // Handle success
-      _currencies.value = currencies;
+      this.currencies.value = currencies;
       print("Currency saved successfully");
     });
 
@@ -169,7 +164,7 @@ class HomeController extends GetxController {
       // Optionally, show error to the user
     }, (currencies) {
       // Handle success
-      _currencies.value = currencies;
+      this.currencies.value = currencies;
       print("Saved currencies fetched successfully");
     });
 
@@ -191,7 +186,7 @@ class HomeController extends GetxController {
       // Optionally, show error to the user
     }, (currencies) {
       // Handle success
-      _currencies.value = currencies;
+      this.currencies.value = currencies;
       print("Exchange amounts fetched successfully");
     });
 

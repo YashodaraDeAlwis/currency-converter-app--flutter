@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 
 class CountryPickerBottomSheet extends StatefulWidget {
   final List<String> countries;
+  final Function(String) onSelect; // Callback to handle selection
 
-  CountryPickerBottomSheet({required this.countries});
+  const CountryPickerBottomSheet({
+    required this.countries,
+    required this.onSelect,
+  });
 
   @override
   _CountryPickerBottomSheetState createState() =>
@@ -38,17 +42,17 @@ class _CountryPickerBottomSheetState extends State<CountryPickerBottomSheet> {
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide(
+                  borderSide: const BorderSide(
                     color: AppColors.white50,
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide(
+                  borderSide: const BorderSide(
                     color: AppColors.white50,
                   ),
                 ),
-                prefixIcon: Icon(
+                prefixIcon: const Icon(
                   Icons.search,
                   color: AppColors.light,
                 ),
@@ -58,7 +62,7 @@ class _CountryPickerBottomSheetState extends State<CountryPickerBottomSheet> {
                   searchTerm = value;
                 });
               },
-              style: TextStyle(color: Colors.white, fontSize: 16),
+              style: const TextStyle(color: Colors.white, fontSize: 16),
             ),
             Expanded(
               child: ListView.builder(
@@ -75,7 +79,8 @@ class _CountryPickerBottomSheetState extends State<CountryPickerBottomSheet> {
                     ),
                     onTap: () {
                       // Handle country selection
-                      Navigator.pop(context, filteredCountries[index]);
+                      widget.onSelect(filteredCountries[index]);
+                      Navigator.pop(context);
                     },
                   );
                 },
