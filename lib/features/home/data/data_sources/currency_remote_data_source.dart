@@ -4,7 +4,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class CurrencyRemoteDataSource extends ICurrencyRemoteDataSource {
-  final String apiUrl = 'https://api.example.com/currencies'; // Updated URL
+  final String apiUrl =
+      'https://api.currencyapi.com/v3/latest?apikey=cur_live_2ZdO4Gal4sdLauBSnBQf2lUq82rGZJLUh92TS2GU'; // Updated URL
   final String deleteCartUrl =
       'https://api.example.com/deleteCart'; // Dummy URL
   final String editCurrencyUrl =
@@ -21,8 +22,20 @@ class CurrencyRemoteDataSource extends ICurrencyRemoteDataSource {
     final response = await http.get(Uri.parse(apiUrl));
 
     if (response.statusCode == 200) {
-      List<dynamic> data = json.decode(response.body);
-      return data.map((json) => CurrencyDTO.fromJson(json)).toList();
+      final Map<String, dynamic> data = json.decode(response.body);
+      final currenciesData = data['data'] as Map<String, dynamic>;
+
+      return currenciesData.entries.map((entry) {
+        final code = entry.key;
+        final currencyData = entry.value;
+
+        return CurrencyDTO(
+          id: 0, // or another unique identifier if available
+          img: 'assets/usa.png', // Replace with actual image path if needed
+          code: code,
+          value: currencyData['value']?.toDouble() ?? 0.0,
+        );
+      }).toList();
     } else {
       throw Exception('Failed to load currencies');
     }
