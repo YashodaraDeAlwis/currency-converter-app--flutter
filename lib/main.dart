@@ -1,4 +1,5 @@
 import 'package:currecny_converter_app/bindings/initial_bindings.dart';
+import 'package:currecny_converter_app/config/theme.dart';
 import 'package:currecny_converter_app/config/values.dart';
 import 'package:currecny_converter_app/core/routes/pages.dart';
 import 'package:currecny_converter_app/core/routes/routes.dart';
@@ -27,6 +28,7 @@ class CurrencyConverter extends StatelessWidget {
       title: Values.title,
       getPages: pages,
       initialRoute: Routes.splash,
+      theme: AppTheme.dark,
       defaultTransition: Transition.cupertinoDialog,
       initialBinding: InitialBindings(),
     );

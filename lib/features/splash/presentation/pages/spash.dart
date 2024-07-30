@@ -35,7 +35,7 @@ class SplashPage extends StatelessWidget {
                 child: const Text(
                   "Advanced Exchanger",
                   style: TextStyle(
-                    color: AppColors.dark,
+                    color: AppColors.light,
                     fontWeight: FontWeight.w500,
                     fontSize: 20,
                     letterSpacing: 5,
@@ -58,8 +58,8 @@ class SplashPage extends StatelessWidget {
                   child: LinearProgressIndicator(
                     borderRadius: BorderRadius.circular(6),
                     minHeight: 2,
-                    backgroundColor: AppColors.dark50,
-                    color: AppColors.dark,
+                    backgroundColor: AppColors.light,
+                    color: AppColors.dark50,
                     value: controller.progress,
                   ),
                 ),
